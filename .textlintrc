@@ -22,4 +22,7 @@
             "rulePaths": ["~/dotfiles/document/WEB+DB_PRESS.yml"],
         },
     },
+    "plugins": {
+        "@textlint/markdown": true,
+    },
 }
