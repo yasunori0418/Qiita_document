@@ -3,12 +3,15 @@
 でも、Linux使ってるんだから、人が作ったものより、自分が作ったやつでデスクトップを飾りたいと思いませんか？
 今回紹介する`conky-draw`は、そんなあなたにおすすめです。
 
+
 ## conky_draw
 
 https://github.com/fisadev/conky-draw
 
 簡単に説明するなら、いっぱいLuaを勉強しなくても、Conkyに円グラフを描写することが出来ます。
 GUIも開発されているようですが、私は上手く動かせなかったので割愛します
+
+
 ### インストール
 まずは、GitHubからクローンしましょう。
 
@@ -39,6 +42,7 @@ _※今回は`conky-draw`の紹介なので、`.conkyrc`の記述は省きます
 
 ---
 
+
 ## プロパティ
 
 基本的に`conky_draw_config.lua`の`elements`内に書いていきます。
@@ -46,6 +50,7 @@ _※今回は`conky-draw`の紹介なので、`.conkyrc`の記述は省きます
 ここでは、各プロパティの種類と説明をします。
 
 ---
+
 
 ### `kind`とrequired
 最初に`kind`に描写したい物の種類を設定します。
@@ -75,12 +80,14 @@ conky_value|bar_graph<br>ring_graph<br>ellipse_graph<br>variable_text|conkyで�
 
 ---
 
+
 ### `max_value`
 `conky_value`にパーセンテージ以外の変動する数値を入れた場合、`max_value`に正しく最大値を入れれば、パーセンテージ系の変数を入れた時と同じ振る舞いをします。
 が、最大値を取得できるconky変数を`max_value`にセットしても、そこから最大値は取得してくれません。何かしら、一工夫が必要です。
 素直に最大値を調べて、`max_value`に入れてしまうのが無難ですね。
 
 ---
+
 
 ### `color`
 色の設定は、16進数表記のRGBを使用します。このスクリプトでは、`0x000000`という形で宣言します。
@@ -95,6 +102,7 @@ bar_color|bar_graph<br>ring_graph<br>ellrpse_graph|前景部分の色
 
 ---
 
+
 ### `thickness`
 線の厚さの設定になります。
 
@@ -108,6 +116,7 @@ bar_thickness|bar_graph<br>ring_graph<br>ellipse_grape|前景部分の線の厚�
 
 ---
 
+
 ### `alpha`
 不透明度の設定になります。`alpha=0`で透明。`alpha=1`で不透明。`alpha=0.5`の様に設定してください。
 
@@ -120,6 +129,7 @@ background<br>_alpha|bar_graph<br>ring_graph<br>ellipse_graph|背景部分の線
 bar_alpha|bar_graph<br>ring_graph<br>ellipse_grape|前景部分の線の不透明度
 
 ---
+
 
 ### text関連
 文字を描写する時に関連するプロパティ一覧は、以下の表になります。
@@ -136,6 +146,7 @@ italic|描写テキストをイタリック体(斜体)にする。<br>設定値�
 
 ---
 
+
 ### `critical_threshold`とchange系プロパティ
 グラフで一定の値になった時に、グラフの見た目を変えることができます。
 `critical_threshold`にしきい値を設定し、しきい値以上になったら、change系プロパティに設定した通りの見た目に変わります。
@@ -151,6 +162,7 @@ change_thickness<br>_on_critical|しきい値以上になったら、設定し�
 change_alpha<br>_on_critical|しきい値以上になったら、設定した不透明度に変化します。
 
 ---
+
 
 ### angle
 ![GitHubより-欠けた円](https://raw.githubusercontent.com/fisadev/conky-draw/master/samples/sample5.png "GitHubより-欠けた円")
@@ -175,6 +187,7 @@ end_angle=360,
 
 ---
 
+
 ### `graduation`
 ![GitHubより](https://raw.githubusercontent.com/fisadev/conky-draw/master/samples/graduated_ring.png)
 
@@ -192,8 +205,10 @@ _こういうグラフの名前って正確には何て言うんですかね…�
 _一応、目盛りとか言ってますけど、graduationで調べても卒業って単語しか出ないんですよね。_
 _ご存知の方がいらっしゃったら、コメントください。_
 
+
 ## 応用編
 自分でウィジェット作る時に、覚えておくと便利な物を紹介します。
+
 ### 変数
 座標や色など、何度も入力するのは面倒になるはずなので、`elements`の上の方に変数を設定しておきます。
 
@@ -272,6 +287,7 @@ elements{
 
 自分の作ってる奴の一部を抜粋してきました。こんな風に変数使うんだな、くらいに思って貰えれば大丈夫です。
 
+
 ### 文字サイズ
 `.conkyrc`内の`conky.text`で文字を描写する時と、`conky-draw`で文字を描写する時とでは、フォントサイズが`conk-draw`の方が小さいです。
 座標で指定できる`conky-draw`の方が文字を描写する時も便利ですが、多少なりとも、`.conkyrc`も併用したい時が出てきます。
@@ -295,11 +311,13 @@ elements{
 
 自分の環境で何度か試した結果、`conky-draw`で描写するテキストを`1.333倍`すれば、`.conkyrc`で描写するテキストと同じサイズになりました。[^1]
 
+
 ## さいごに
 全プロパティの紹介には、骨が折れました。（笑）
 GitHubのページを翻訳すれば、ある程度は分かる事なのですが、こうやって日本語にしておくだけでも、自分だけのウィジェット開発の参考になるので、こういう形でアウトプットするのも有りだと思いました。
 
 このスクリプト、なかなかの神スクリプトだと思うのですが、開発が2年前で止まっているのが少々残念な所。issuesにもリクエストが幾つか来ているし、伸び代はいっぱいあるんですけどね……
+
 
 ### 注釈
 [^1]: 自分の環境以外では違うのか、検証できてません。違うよって人が居たら教えてください。
