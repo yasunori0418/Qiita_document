@@ -18,5 +18,8 @@
             "ja-no-weak-phrase": false,
             "no-exclamation-question-mark": false,
         },
+        "prh": {
+            "rulePaths": ["~/dotfiles/document/WEB+DB_PRESS.yml"],
+        },
     },
 }
