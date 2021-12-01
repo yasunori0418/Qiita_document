@@ -2,7 +2,12 @@
     "filters": {
         "comments": true,
         "allowlist": {
-            "allow": []
+            "allow": [
+                
+            ],
+            "allowlistConfigPaths": [
+                
+            ],
         },
     },
     "rules": {
