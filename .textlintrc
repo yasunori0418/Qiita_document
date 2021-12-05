@@ -3,7 +3,7 @@
         "comments": true,
         "allowlist": {
             "allow": [
-                
+                "line",
             ],
             "allowlistConfigPaths": [
                 
@@ -12,9 +12,7 @@
     },
     "rules": {
         "preset-ja-technical-writing": {
-            "sentence-length": {
-                "max": 100,
-            },
+            "sentence-length": false,
             "ja-no-weak-phrase": false,
             "no-exclamation-question-mark": false,
         },
