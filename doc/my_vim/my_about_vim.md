@@ -123,7 +123,7 @@ https://github.com/EdenEast/nightfox.nvim
 
 本当はnvim-lspconfigを導入して軽快に補完操作をしたいのですが、luaで書く設定が難しいので自分はvim-lspを使っています。
 vim-lspの良いところは、同時にインストールすると便利になるvim-lsp-settingsがあります。
-本来ですとLanguage-Serverを使うためには、vim-lspに設定する必要がありますが、その設定をvim-lsp-settingsが代わりに行ってくれます。
+本来ですとLanguage-Serverを使うためには、vim-lspに設定する必要がありますが、その設定をvim-lsp-settingsというプラグインが代わりに行ってくれます。
 また、Language-Serverがインストールされていない言語のファイルを開くと、使えるLanguage-Serverを提案してくれて、コマンドを実行すればローカル環境にインストールできます。
 
 
