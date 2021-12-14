@@ -58,4 +58,4 @@ Vimの紹介記事でよく見る`set {option}`系の内容は、`.vim/rc/option
 
 
 <!-- リンク集 -->
-[1]:Vimを使い始めた理由とカスタマイズの大筋について
+[1]:https://qiita.com/yasunori-kirin0418/items/32af601fb53285e06317
