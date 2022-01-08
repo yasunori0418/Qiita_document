@@ -76,7 +76,7 @@ Vim/NeoVimのプラグインマネージャー界隈でも、大手の[vim-plug]
 つまり、対象としているユーザー層が違うのです。
 
 
-## dein.vim~高速化の鍵~
+## dein.vim\~高速化の鍵\~
 
 ここからは、dein.vimがどのようにして高速化を実現しているか、紐解いていきたいと思います。
 
@@ -88,17 +88,11 @@ Vim/NeoVimのプラグインマネージャー界隈でも、大手の[vim-plug]
     <dt>Vim or NeoVim</dt>
     <dd>NeoVim</dd>
     <dt>インストール先</dt>
-    <dd><div>`~/.cache/dein`</div></dd>
+    <dd><code>`~/.cache/dein`</code></dd>
     <dt>プラグイン管理方式</dt>
     <dd>tomlファイル</dd>
 </dl>
 
-|                  |               |
-|------------------|---------------|
-|OS                |Linux          |
-|Vim or NeoVim     |NeoVim         |
-|インストール先    |`~/.cache/dein`|
-|プラグイン管理方式|tomlファイル   |
 
 
 <!-- Links -->
