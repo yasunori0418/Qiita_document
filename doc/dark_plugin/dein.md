@@ -80,7 +80,7 @@ Vim/NeoVimのプラグインマネージャー界隈でも、大手の[vim-plug]
 
 ここからは、dein.vimがどのようにして高速化を実現しているか、紐解いていきたいと思います。
 
-今回は、以下の環境で見ていきます。また、インストール手順は、dein.vimのREADMEの通りにしたものとします。
+今回は、以下の環境で見ていきます。
 
 <dl>
     <dt>OS</dt>
@@ -93,6 +93,64 @@ Vim/NeoVimのプラグインマネージャー界隈でも、大手の[vim-plug]
     <dd>tomlファイル</dd>
 </dl>
 
+また、dein.vimのインストールで使用するスクリプトは以下のようにしています。
+
+```vim:~/.config/nvim/init.vim
+source ~/.vim/init.vim
+```
+
+```vim:~/.vim/init.vim
+if &compatible
+  set nocompatible
+endif
+
+" dein base directory.
+let s:dein_dir = expand('~/.cache/dein')
+
+" dein repository directory.
+let s:dein_repo = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
+
+" vim setting directory.
+let g:base_dir = fnamemodify(expand('<sfile>'), ':h') .. '/'
+
+" vimrcs directory.
+let s:vimrcs_dir = g:base_dir .. 'rc/'
+
+" plugins toml-file directory.
+let s:toml_dir = g:base_dir ..'toml/'
+
+
+if &runtimepath !~# '/dein.vim'
+    if !isdirectory(s:dein_repo)
+        execute '!git clone https://github.com/Shougo/dein.vim' s:dein_repo
+    endif
+    execute 'set runtimepath^=' . s:dein_repo
+endif
+
+if dein#min#load_state(s:dein_dir)
+
+    call dein#begin(s:dein_dir)
+
+    let s:dein_toml = s:toml_dir .. 'dein.toml'
+    let s:dein_lazy_toml = s:toml_dir .. 'lazy.toml'
+
+    " read toml and cache
+    call dein#load_toml(s:dein_toml, {'lazy': 0})
+    call dein#load_toml(s:dein_lazy_toml, {'lazy': 1})
+
+    " end settings
+    call dein#end()
+    call dein#save_state()
+endif
+
+
+if dein#check_install()
+    call dein#install()
+endif
+
+filetype plugin indent on
+syntax enable
+```
 
 ### no_lazyのプラグインも高速化するマージ機能
 
@@ -126,10 +184,14 @@ merged = 0
 
 ### 設定は`state_nvim.vim`[^2]に集結する。
 
+プラグイン読み込みのタイミングを指定する方法はいくつかありますが、`on_*`系が一番ポピュラーですね。
+
 dein.vimでは、プラグインの読み込みや更新のタイミングでフックして、ユーザーが書いた設定処理を実行できます。
 フックについて分りやすいのは以下の記事になります。
 
 https://qiita.com/delphinus/items/cd221a450fd23506e81a
+
+それでは、プラグインの読み込みタイミングや設定内容が、どのように処理されているのかというと、`state_nvim.vim`にまとめられています。
 
 
 ## 注釈
