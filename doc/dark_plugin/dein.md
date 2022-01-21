@@ -196,6 +196,44 @@ https://qiita.com/delphinus/items/cd221a450fd23506e81a
 これらの処理は、`dein#save_state()`によって実行され、`state_nvim.vim`を生成してくれます。
 
 
+### プラグインの更新について
+
+dein.vimでは、プラグインの更新に使う関数として、`dein#update()`があります。
+通常プラグインの更新というと、各リポジトリの`master/main`のバージョンを確認してプルなどで更新します。
+しかし、dein.vimは更新確認に`git`コマンドを使用しないで、`.git/`内のファイルを参照してバージョンを確認しているようです。
+Windowsでは外部プロセスの起動に時間がかかるため、高速化になるようです。[参考記事][4]
+
+
+## お勧めのオプション
+
+dein.vimで使わなくても大丈夫だけど、使うともっと便利に高速化できるオプションを紹介したいと思います。
+
+
+### `g:dein#inline_vimrcs`で分割している設定を、`state_nvim.vim`にまとめる。
+
+ファイルの見通しを良くするために設定ファイルを分割するユーザーもいます。
+<!-- textlint-disable -->
+たとえば、`:set`などの基本オプションだけまとめたスクリプトや、オレオレキーバインド、GUI専用のオプション……etc.
+<!-- textlint-enable -->
+そういった人のために、それらの設定を`state_nvim.vim`にまとめてくれる機能がdein.vimにはあります。
+
+設定方法は簡単で、読み込んでほしい設定ファイルのパスを`g:dein#inline_vimrcs`に追加することです。
+`g:dein#inline_vimrcs`はリスト型になっているので、`if has() … end`と`add()`を使えば使用条件によって、読み込む設定ファイルの変更が可能です。
+
+注意点は、`dein#begin()`よりも前に定義する必要があることですね。
+
+最終的に設定ファイルが読み込まれると、コメントや空行などの無駄なものを省いて、`state_nvim.vim`に含めてくれます。
+
+
+### `g:dein#lazy_rplugins`でリモートプラグインの読み込みも遅延する。
+
+NeoVimには、リモートプラグインという別の言語で書かれたプラグインを読み込むためのスクリプトがあります。
+これも基本プラグインに含まれる訳ですが、依存するプラグインが起動するまで、読み込まないようにできます。
+使用するプラグインの依存関係によりますが、そういったプラグインを使用しているなら、設定してみるのはどうでしょうか。
+
+
+
+
 ## 注釈
 
 [^1]: .vimrcを読み込んでいる場合、`~/.cache/dein/.cache/.vimrc/.dein/`になります。
@@ -206,3 +244,4 @@ https://qiita.com/delphinus/items/cd221a450fd23506e81a
 [1]: https://github.com/Shougo/dein.vim
 [2]: https://github.com/wbthomason/packer.nvim
 [3]: https://github.com/junegunn/vim-plug
+[4]: https://thinca.hatenablog.com/entry/dein-vim-with-graphql-api
