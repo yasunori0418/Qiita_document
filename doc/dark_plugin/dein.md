@@ -113,9 +113,6 @@ let s:dein_repo = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
 " vim setting directory.
 let g:base_dir = fnamemodify(expand('<sfile>'), ':h') .. '/'
 
-" vimrcs directory.
-let s:vimrcs_dir = g:base_dir .. 'rc/'
-
 " plugins toml-file directory.
 let s:toml_dir = g:base_dir ..'toml/'
 
@@ -128,7 +125,6 @@ if &runtimepath !~# '/dein.vim'
 endif
 
 if dein#min#load_state(s:dein_dir)
-
     call dein#begin(s:dein_dir)
 
     let s:dein_toml = s:toml_dir .. 'dein.toml'
@@ -194,7 +190,10 @@ https://qiita.com/delphinus/items/cd221a450fd23506e81a
 それでは、プラグインの読み込みタイミングや設定内容が、どのように処理されているのかというと、`~/.cache/dein/state_nvim.vim`にまとめられています。
 実際にプラグインをインストールして、いくつか設定をしたうえで`state_nvim.vim`を見てみると、tomlファイルに記述した設定内容がVim Scriptになって反映されています。
 
-やはり、ここでも読み込むファイル数を少なくして、高速化を図るdein.vimの設計思想が伺えますね。
+ここでも読み込むファイル数を少なくして、高速化を図るdein.vimの設計思想が伺えますね。
+そして、`state_nvim.vim`を読んでもらえると分るかと思いますが、ここではVim/NeoVimの起動時の`runtimepath`を定義しています。
+
+これらの処理は、`dein#save_state()`によって実行され、`state_nvim.vim`を生成してくれます。
 
 
 ## 注釈
