@@ -95,6 +95,8 @@ Vim/NeoVimのプラグインマネージャー界隈でも、大手の[vim-plug]
 
 また、dein.vimのインストールで使用するスクリプトは以下のようにしています。
 
+<div><details><summary>dein.vimインストールスクリプト</summary>
+
 ```vim:~/.config/nvim/init.vim
 source ~/.vim/init.vim
 ```
@@ -147,6 +149,7 @@ endif
 filetype plugin indent on
 syntax enable
 ```
+</details></div>
 
 ### no_lazyのプラグインも高速化するマージ機能
 
