@@ -229,7 +229,7 @@ dein.vimで使わなくても大丈夫だけど、使うともっと便利に高
 `g:dein#inline_vimrcs`はリスト型になっているので、`if has() … end`と`add()`を使えば使用条件によって、読み込む設定ファイルの変更が可能です。
 
 <!-- g:dein#inline_vimrcs code e.g {{{ -->
-<div><details><summary>`g:dein#inline_vimrcs = []`の記述例</summary>
+<div><details><summary><code>g:dein#inline_vimrcs = []</code>の記述例</summary>
 
 <!-- ここにg:dein#inline_vimrcs = []の記述例を入れる。 -->
 
