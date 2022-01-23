@@ -172,7 +172,7 @@ tomlファイルでプラグインを管理する場合`dein#load_toml()`を使�
 この数をdein.vimでは、ディレクトリをマージしてしまうことで少なくしているのですね。
 もちろんプラグインによってはマージされたら困るものや、スクリプト名が被ってしまう可能性もありますので、ユーザーが明示的にマージを無効化できます。
 
-toml内でマージしてほしくない場合は、以下のように記述します。
+プラグインディレクトリをマージしてほしくない場合は、toml内で以下のように記述します。
 
 ```toml:dein_no_lazy.toml
 [[plugins]]
@@ -209,7 +209,7 @@ dein.vimでは、プラグインの更新に使う関数として、`dein#update
 しかし、dein.vimは更新確認に`git`コマンドを使用しないで、`.git/`内のファイルを参照してバージョンを確認しているようです。
 Windowsでは外部プロセスの起動に時間がかかるため、高速化になるようです。
 
-[参考記事:永遠に未完成より][4]
+[参考記事:『永遠に未完成』][4]
 
 
 ## お勧めのオプション
@@ -250,6 +250,15 @@ NeoVimには、リモートプラグインという別の言語で書かれた�
 
 ### GitHub GraphQL APIを使用した、高速アップデート
 
+上の方では`dein#update()`を紹介しましたが、それよりも高速にプラグインの更新を確認してくれる機能が`dein#check_update()`です。
+この機能を使うには、`g:dein#install_github_api_token`にGitHubから取得できるPersonal Access Token(以下：PAT)をセットする必要があります。
+PATの生成方法と、`dein#check_update()`の使用方法は、先にも紹介した[参考記事:『永遠に未完成』][4]をご覧ください。
+
+しかし、自分の様にdotfiles等の形でGitHubに公開している場合、PATをそのまま書き込むのは危険です。
+ですので、自分流のPAT管理方法を紹介したいと思います。
+
+<!-- ここにPAT管理方法 -->
+
 
 ## 注釈
 
@@ -262,3 +271,4 @@ NeoVimには、リモートプラグインという別の言語で書かれた�
 [2]: https://github.com/wbthomason/packer.nvim
 [3]: https://github.com/junegunn/vim-plug
 [4]: https://thinca.hatenablog.com/entry/dein-vim-with-graphql-api
+[5]: https://qiita.com/yasunori-kirin0418/items/62a1b555fdc02914bcb7
