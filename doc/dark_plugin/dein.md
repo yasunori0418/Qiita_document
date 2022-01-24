@@ -230,7 +230,7 @@ dein.vimで使わなくても大丈夫だけど、使うともっと便利に高
 `g:dein#inline_vimrcs`はリスト型になっているので、`if has() … end`と`add()`を使えば使用条件によって、読み込む設定ファイルの変更が可能です。
 
 <!-- g:dein#inline_vimrcs code e.g {{{ -->
-<div><details><summary><code>g:dein#inline_vimrcs = []</code>の記述例</summary>
+<details><summary><code>g:dein#inline_vimrcs = []</code>の記述例</summary><div>
 
 ディレクトリ構造は、[ここ][5]で解説したものを元に記述例を書いていきます。
 `.vim/rc/`には、以下のファイルがあるものとします。
@@ -272,7 +272,7 @@ if dein#min#load_state(s:dein_dir)
 
 これで`gnvim.vim`はターミナルで使用するときは読み込まれず、GUIで使用する場合は読み込まれるようになりました。
 
-</details></div>
+</div></details>
 <!-- }}} -->
 
 注意点は、`dein#begin()`よりも前に定義する必要があることですね。
