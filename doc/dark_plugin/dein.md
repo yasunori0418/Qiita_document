@@ -1,7 +1,7 @@
 # 始めに
 
 この記事は、Shougo氏が作製するプラグインを解説する、闇のプラグインシリーズ第1弾になります。
-第1弾では、Vim/NeoVimのプラグインマネージャーである、dein.vimを紹介していこうと思います。
+第1弾では、Vim/Neovimのプラグインマネージャーである、dein.vimを紹介していこうと思います。
 
 https://github.com/Shougo/dein.vim
 
@@ -20,7 +20,7 @@ https://github.com/Shougo/dein.vim
 
 ## `runtimepath`から見るプラグインマネージャー
 
-Vim/NeoVimのプラグインと呼ばれる物は、基本的には`runtimepath`に指定したパスを起点に、特定のディレクトリ内のスクリプトをプラグインと呼んでいます。
+Vim/Neovimのプラグインと呼ばれる物は、基本的には`runtimepath`に指定したパスを起点に、特定のディレクトリ内のスクリプトをプラグインと呼んでいます。
 これは、GitHubで配布されているプラグインにかかわらず、最初からいくつかの基本プラグインが読み込まれています。
 
 ただ`runtimepath`は、指定したパス内の特定のディレクトリを読み込みに行くという単純な動作のため、
@@ -33,44 +33,44 @@ Vim/NeoVimのプラグインと呼ばれる物は、基本的には`runtimepath`
 
 例外なくdein.vimも`runtimepath`を利用していますが、既存の`runtimepath`を上書きをして高速化を実現しています。
 つまり、dein.vimを導入するということは、全体の`runtimepath`の管理をdein.vimで行うことになるのです。
-dein.vimはVim/NeoVimが起動するまでのプロセスの妨げにならず、ユーザーがすべてを操作できるように機能が提供されています。
+dein.vimはVim/Neovimが起動するまでのプロセスの妨げにならず、ユーザーがすべてを操作できるように機能が提供されています。
 
 しかし、それらの機能を理解しないで使うということは、宝の持ち腐れになります。
 自分がヘルプやソースコードを読んで、こう思いました。
 「プラグインをインストールして遅延起動させたいだけなら、ほかのプラグインマネージャーで良い。
-Vim/NeoVimを極限まで調整したい人なら、導入していじり倒すべきプラグインマネージャーなのだ。」
+Vim/Neovimを極限まで調整したい人なら、導入していじり倒すべきプラグインマネージャーなのだ。」
 
 
 ## 他のプラグインマネージャーとの比較
 
-それでは、dein.vimがVim/NeoVimを極限まで調整する人向けのプラグインマネージャーということが分ってもらえたと思います。
+それでは、dein.vimがVim/Neovimを極限まで調整する人向けのプラグインマネージャーということが分ってもらえたと思います。
 ですので、少々脱線してほかのプラグインマネージャーも見てみようと思います。
 
 
 ### 組込みのプラグインマネージャー
 
-Vim/NeoVimには、`packages`という組込みのプラグインマネージャーが存在します。
+Vim/Neovimには、`packages`という組込みのプラグインマネージャーが存在します。
 詳しいことは`:h packages`をご覧いただければ分ると思いますが、結果的に`runtimepath`を使用してプラグインを読み込むことに変わりありません。
 プラグインマネージャーを使わず、組込みの機能だけを使うという方は、こちらをお使いください。
 
 
-### NeoVim限定のプラグインマネージャー
+### Neovim限定のプラグインマネージャー
 
 最近では、`packages`を使うプラグインマネージャーが出てきています。
 その中でも[packer.nvim][2]は有名で、`packages`を使ってプラグイン管理をしています。
 
-NeoVimでは、Luaで設定ができるようになっていて、NeoVimユーザーならLuaで設定を書くと速くなると言われています。
-packer.nvimのコーディングにはLuaが使われているので、NeoVim永住宣言をしている方にピッタリだと思います。
+Neovimでは、Luaで設定ができるようになっていて、NeoVimユーザーならLuaで設定を書くと速くなると言われています。
+packer.nvimのコーディングにはLuaが使われているので、Neovim永住宣言をしている方にピッタリだと思います。
 
 
 ### 大手のプラグインマネージャー
 
-Vim/NeoVimのプラグインマネージャー界隈でも、大手の[vim-plug][3]があります。
+Vim/Neovimのプラグインマネージャー界隈でも、大手の[vim-plug][3]があります。
 こちらは、ワンスクリプトで完結していて、`runtimepath`をセットしたパス内の`autoload/`に配置して、プラグインがダウンロードされる場所を指定するだけで使えるミニマルなプラグインマネージャーです。
 このプラグインマネージャーは機能がシンプルで、Vimを初めて触るという方が、プラグインを入れたいと言ったら、お勧めするプラグインマネージャーです。
 
 「えっ？  dein.vimの紹介なのに、ほかのプラグインマネージャーをお勧めしちゃうの？」と、思われるかもしれません。
-先にも説明した通り、dein.vimはVim/NeoVimを極限まで調整したいユーザーが導入するべきプラグインマネージャーであり、初心者にお勧めするプラグインマネージャーではないのです。
+先にも説明した通り、dein.vimはVim/Neovimを極限まで調整したいユーザーが導入するべきプラグインマネージャーであり、初心者にお勧めするプラグインマネージャーではないのです。
 しかし、このvim-plugは設定もシンプルで、難しいところが少ないので、Vimでプラグインを入れてみたいだけならこれで十分なのです。
 
 つまり、対象としているユーザー層が違うのです。
@@ -85,8 +85,8 @@ Vim/NeoVimのプラグインマネージャー界隈でも、大手の[vim-plug]
 <dl>
     <dt>OS</dt>
     <dd>Linux</dd>
-    <dt>Vim or NeoVim</dt>
-    <dd>NeoVim</dd>
+    <dt>Vim or Neovim</dt>
+    <dd>Neovim</dd>
     <dt>インストール先</dt>
     <dd><code>`~/.cache/dein`</code></dd>
     <dt>プラグイン管理方式</dt>
@@ -197,7 +197,7 @@ https://qiita.com/delphinus/items/cd221a450fd23506e81a
 実際にプラグインをインストールして、いくつか設定をしたうえで`state_nvim.vim`を見てみると、tomlファイルに記述した設定内容がVim Scriptになって反映されています。
 
 ここでも読み込むファイル数を少なくして、高速化を図るdein.vimの設計思想が伺えますね。
-そして、`state_nvim.vim`を読んでもらえると分るかと思いますが、ここではVim/NeoVimの起動時の`runtimepath`を定義しています。
+そして、`state_nvim.vim`を読んでもらえると分るかと思いますが、ここではVim/Neovimの起動時の`runtimepath`を定義しています。
 
 これらの処理は、`dein#save_state()`によって実行され、`state_nvim.vim`を生成してくれます。
 
@@ -231,21 +231,102 @@ dein.vimで使わなくても大丈夫だけど、使うともっと便利に高
 <!-- g:dein#inline_vimrcs code e.g {{{ -->
 <div><details><summary><code>g:dein#inline_vimrcs = []</code>の記述例</summary>
 
-<!-- ここにg:dein#inline_vimrcs = []の記述例を入れる。 -->
+ディレクトリ構造は、[ここ][5]で解説したものを元に記述例を書いていきます。
+`.vim/rc/`には、以下のファイルがあるものとします。
+
+|ファイル名 |説明                             |
+|-----------|---------------------------------|
+|option.vim |`:set`で始まる基本設定。         |
+|keybind.vim|全体で使うキーバインド。         |
+|gnvim.vim  |GUI版のNeovimの設定をまとめた物。|
+
+ここでは`gnvim.vim`はターミナルで使用する場合は読み込んでほしくないので、それも踏まえた設定をしていきましょう。
+
+```diff_vim:~/.vim/init.vim
+
+if &runtimepath !~# '/dein.vim'
+    if !isdirectory(s:dein_repo)
+        execute '!git clone https://github.com/Shougo/dein.vim' s:dein_repo
+    endif
+    execute 'set runtimepath^=' . s:dein_repo
+endif
+
+if dein#min#load_state(s:dein_dir)
++
++     " dein inline_vimrcs setting.{{{
++
++     let g:dein#inline_vimrcs = ['option.vim', 'keybind.vim']
++
++     if has('gui_running')
++         call add(g:dein#inline_vimrcs, 'gnvim.vim'))
++     endif
++
++     call map(g:dein#inline_vimrcs, { _, val -> s:vimrcs_dir .. val })
++
++     " }}}
++
+    call dein#begin(s:dein_dir)
+
+```
+
+これで`gnvim.vim`はターミナルで使用するときは読み込まれず、GUIで使用する場合は読み込まれるようになりました。
 
 </details></div>
 <!-- }}} -->
 
 注意点は、`dein#begin()`よりも前に定義する必要があることですね。
+また、頻繁に設定を変更する場合は、キャッシュスクリプトの更新が必要です。
+その更新をしてくれる`dein#recache_runtimepath()`という関数もありますが、その度に関数を実行するのは面倒なので、以下のオプションを設定するのをお勧めします。
+
+```diff_vim:~/.vim/init.vim
+if &runtimepath !~# '/dein.vim'
+    if !isdirectory(s:dein_repo)
+        execute '!git clone https://github.com/Shougo/dein.vim' s:dein_repo
+    endif
+    execute 'set runtimepath^=' . s:dein_repo
+endif
++
++ " dein options {{{
++
++ let g:dein#auto_recache = v:true
++
++ " }}}
+
+if dein#min#load_state(s:dein_dir)
+```
+
+自分の場合、dein.vimのインストール確認と`runtimepath`をセットした後に、オプション用のブロックを用意してそこに書き込んでいます。
 
 最終的に設定ファイルが読み込まれると、コメントや空行などの無駄なものを省いて、`state_nvim.vim`に含めてくれます。
 
 
 ### `g:dein#lazy_rplugins`でリモートプラグインの読み込みも遅延する。
 
-NeoVimには、リモートプラグインという別の言語で書かれたプラグインを読み込むためのスクリプトがあります。
+Neovimには、リモートプラグインという別の言語で書かれたプラグインを読み込むためのスクリプトがあります。
 これも基本プラグインに含まれる訳ですが、依存するプラグインが起動するまで、読み込まないようにできます。
 使用するプラグインの依存関係によりますが、そういったプラグインを使用しているなら、設定してみるのはどうでしょうか。
+
+<!-- g:dein#lazy_rplugins setting e.g {{{ -->
+
+```diff_vim:~/.vim/init.vim
+if &runtimepath !~# '/dein.vim'
+    if !isdirectory(s:dein_repo)
+        execute '!git clone https://github.com/Shougo/dein.vim' s:dein_repo
+    endif
+    execute 'set runtimepath^=' . s:dein_repo
+endif
+
+" dein options {{{
+
+let g:dein#auto_recache = v:true
++ let g:dein#lazy_rplugins = v:true
+
+" }}}
+
+if dein#min#load_state(s:dein_dir)
+```
+
+<!-- }}} -->
 
 
 ### GitHub GraphQL APIを使用した、高速アップデート
@@ -257,13 +338,54 @@ PATの生成方法と、`dein#check_update()`の使用方法は、先にも紹�
 しかし、自分の様にdotfiles等の形でGitHubに公開している場合、PATをそのまま書き込むのは危険です。
 ですので、自分流のPAT管理方法を紹介したいと思います。
 
-<!-- ここにPAT管理方法 -->
+<!-- g:dein#install_github_api_token management code e.g {{{ -->
 
+まずは、PATが書かれたものをGitのトラッキング対象外にしたいので、`.gitignore`に以下のものを書き加えましょう。
+
+```gitignore:~/.vim/.gitignore
+# Ignore github_pat
+.vim/github_pat
+```
+
+先の[参考記事][4]を元にPATを取得したら、`.vim/github_pat`を作成してPATを貼り付けておきましょう。
+そしたら、`init.vim`に以下の設定を書きましょう。
+
+```diff_vim:~/.vim/init.vim
+
+" dein options {{{
+
+let g:dein#lazy_rplugins = v:true
+
++ " GitHub apt file.
++ let s:github_pat = g:base_dir .. 'github_pat'
++
++ " github_patが有るか確認する。
++ if filereadable(s:github_pat)
++
++     " ここで、g:dein#install_github_api_tokenにPATをセットする。
++     let g:dein#install_github_api_token = readfile(s:github_pat)[0]
++ endif
+
+" }}}
+
+```
+
+これで、`call dein#check_update(v:true)`を実行すれば、プラグインの更新をしてくれるのですが、コマンドを定義して更新しやすくしましょう。
+
+```vim:~/dotfiles/.vim/init.vim
+
+" Check for plugin updates on github graphQL api.{{{
+command! DeinUpdate call dein#check_update(v:true)
+" }}}
+
+```
+
+<!-- }}} -->
 
 ## 注釈
 
 [^1]: .vimrcを読み込んでいる場合、`~/.cache/dein/.cache/.vimrc/.dein/`になります。
-[^2]: ファイル名はNeoVim使用時です。Vim使用時は、`state_vim.vim`になります。
+[^2]: ファイル名はNeovim使用時です。Vim使用時は、`state_vim.vim`になります。
 
 
 <!-- Links -->
