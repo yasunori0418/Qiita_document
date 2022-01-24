@@ -96,7 +96,7 @@ Vim/Neovimのプラグインマネージャー界隈でも、大手の[vim-plug]
 また、dein.vimのインストールで使用するスクリプトは以下のようにしています。
 
 <!-- dein.vim install script e.g {{{ -->
-<div><details><summary>dein.vimインストールスクリプト</summary>
+<details><summary>dein.vimインストールスクリプト</summary><div>
 
 ```vim:~/.config/nvim/init.vim
 source ~/.vim/init.vim
@@ -150,7 +150,7 @@ endif
 filetype plugin indent on
 syntax enable
 ```
-</details></div>
+</div></details>
 
 <!-- }}} -->
 
@@ -209,8 +209,9 @@ dein.vimでは、プラグインの更新に使う関数として、`dein#update
 しかし、dein.vimは更新確認に`git`コマンドを使用しないで、`.git/`内のファイルを参照してバージョンを確認しているようです。
 Windowsでは外部プロセスの起動に時間がかかるため、高速化になるようです。
 
-[参考記事:『永遠に未完成』][4]
+以下は参考記事になります。
 
+https://thinca.hatenablog.com/entry/dein-vim-with-graphql-api
 
 ## お勧めのオプション
 
