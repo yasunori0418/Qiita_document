@@ -231,6 +231,7 @@ dein.vimで使わなくても大丈夫だけど、使うともっと便利に高
 <!-- textlint-enable -->
 
 そういった人のために、それらの設定を`state_nvim.vim`にまとめてくれる機能がdein.vimにはあります。
+
 設定方法は簡単で、読み込んでほしい設定ファイルのパスを`g:dein#inline_vimrcs`に追加することです。
 `g:dein#inline_vimrcs`はリスト型になっているので、`if has() … end`と`add()`を使えば使用条件によって、読み込む設定ファイルの変更が可能です。
 
@@ -284,7 +285,7 @@ if dein#min#load_state(s:dein_dir)
 
 注意点は、`dein#begin()`よりも前に定義する必要があることですね。
 また、頻繁に設定を変更する場合は、キャッシュスクリプトの更新が必要です。
-その更新をしてくれる`dein#recache_runtimepath()`という関数もありますが、その度に関数を実行するのは面倒なので、以下のオプションを設定するのをお勧めします。
+その更新をしてくれる`dein#recache_runtimepath()`という関数もありますが、その度に関数を実行するのは面倒ですので、以下のオプションを設定するのをお勧めします。
 
 ```diff_vim_l:~/.vim/init.vim
 if &runtimepath !~# '/dein.vim'
@@ -343,7 +344,7 @@ if dein#min#load_state(s:dein_dir)
 この機能を使うには、`g:dein#install_github_api_token`にGitHubから取得できるPersonal Access Token(以下：PAT)をセットする必要があります。
 PATの生成方法と、`dein#check_update()`の使用方法は、先にも紹介した[参考記事:『永遠に未完成』][4]をご覧ください。
 
-しかし、自分の様にdotfiles等の形でGitHubに公開している場合、PATをそのまま書き込むのは危険です。
+しかし、自分のようにdotfiles等の形でGitHubに公開している場合、PATをそのまま書き込むのは危険です。
 ですので、自分流のPAT管理方法を紹介したいと思います。
 
 <!-- g:dein#install_github_api_token management code e.g {{{ -->
@@ -390,6 +391,19 @@ command! DeinUpdate call dein#check_update(v:true)
 
 <!-- }}} -->
 
+
+## 最後に
+
+dein.vim研究は思った以上にたいへんで、書くのもたいへんでした…。
+ソースコードやヘルプを読むのもたいへんですが、使われているテクニックを理解するのに時間がかかったり、やっていることをうまく言語化するのがたいへんでした。
+ですが、今回の記事の執筆でVim/Neovimのしくみを少しずつ理解できるようになったので、良い成果だと思っています。
+この記事でdein.vimを諦めた人も、チャレンジしてくれるようになったらいいなと思いました。
+ちなみに自分は、より凄さを理解してしまったので、dein.vimから別のプラグインマネージャーに乗り換えるのはできなそうです。
+
+
+_[ここ][6]でShougoさんのプラグインを個別紹介したいとか注釈に書いているけど、研究とまでは行かなくても自分の設定をさらすくらいにした方がよいかもしれないと思いました。_
+
+
 ## 注釈
 
 [^1]: .vimrcを読み込んでいる場合、`~/.cache/dein/.cache/.vimrc/.dein/`になります。
@@ -402,3 +416,4 @@ command! DeinUpdate call dein#check_update(v:true)
 [3]: https://github.com/junegunn/vim-plug
 [4]: https://thinca.hatenablog.com/entry/dein-vim-with-graphql-api
 [5]: https://qiita.com/yasunori-kirin0418/items/62a1b555fdc02914bcb7
+[6]: https://qiita.com/yasunori-kirin0418/items/32af601fb53285e06317
