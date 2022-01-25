@@ -221,15 +221,20 @@ dein.vimで使わなくても大丈夫だけど、使うともっと便利に高
 ### `g:dein#inline_vimrcs`で分割している設定を、`state_nvim.vim`にまとめる。
 
 ファイルの見通しを良くするために設定ファイルを分割するユーザーもいます。
+
 <!-- textlint-disable -->
-たとえば、`:set`などの基本オプションだけまとめたスクリプトや、オレオレキーバインド、GUI専用のオプション……etc.
+
+> たとえば、`:set`などの基本オプションだけまとめたスクリプトや、オレオレキーバインド、GUI専用のオプション……etc.
+
 <!-- textlint-enable -->
+
 そういった人のために、それらの設定を`state_nvim.vim`にまとめてくれる機能がdein.vimにはあります。
 
 設定方法は簡単で、読み込んでほしい設定ファイルのパスを`g:dein#inline_vimrcs`に追加することです。
 `g:dein#inline_vimrcs`はリスト型になっているので、`if has() … end`と`add()`を使えば使用条件によって、読み込む設定ファイルの変更が可能です。
 
 <!-- g:dein#inline_vimrcs code e.g {{{ -->
+
 <details><summary><code>g:dein#inline_vimrcs = []</code>の記述例</summary><div>
 
 ディレクトリ構造は、[ここ][5]で解説したものを元に記述例を書いていきます。
@@ -243,7 +248,7 @@ dein.vimで使わなくても大丈夫だけど、使うともっと便利に高
 
 ここでは`gnvim.vim`はターミナルで使用する場合は読み込んでほしくないので、それも踏まえた設定をしていきましょう。
 
-```diff_vim:~/.vim/init.vim
+```diff_vim_l:~/.vim/init.vim
 
 if &runtimepath !~# '/dein.vim'
     if !isdirectory(s:dein_repo)
@@ -273,13 +278,14 @@ if dein#min#load_state(s:dein_dir)
 これで`gnvim.vim`はターミナルで使用するときは読み込まれず、GUIで使用する場合は読み込まれるようになりました。
 
 </div></details>
+
 <!-- }}} -->
 
 注意点は、`dein#begin()`よりも前に定義する必要があることですね。
 また、頻繁に設定を変更する場合は、キャッシュスクリプトの更新が必要です。
 その更新をしてくれる`dein#recache_runtimepath()`という関数もありますが、その度に関数を実行するのは面倒なので、以下のオプションを設定するのをお勧めします。
 
-```diff_vim:~/.vim/init.vim
+```diff_vim_l:~/.vim/init.vim
 if &runtimepath !~# '/dein.vim'
     if !isdirectory(s:dein_repo)
         execute '!git clone https://github.com/Shougo/dein.vim' s:dein_repo
@@ -309,7 +315,7 @@ Neovimには、リモートプラグインという別の言語で書かれた�
 
 <!-- g:dein#lazy_rplugins setting e.g {{{ -->
 
-```diff_vim:~/.vim/init.vim
+```diff_vim_l:~/.vim/init.vim
 if &runtimepath !~# '/dein.vim'
     if !isdirectory(s:dein_repo)
         execute '!git clone https://github.com/Shougo/dein.vim' s:dein_repo
@@ -345,13 +351,13 @@ PATの生成方法と、`dein#check_update()`の使用方法は、先にも紹�
 
 ```gitignore:~/.vim/.gitignore
 # Ignore github_pat
-.vim/github_pat
+./github_pat
 ```
 
 先の[参考記事][4]を元にPATを取得したら、`.vim/github_pat`を作成してPATを貼り付けておきましょう。
 そしたら、`init.vim`に以下の設定を書きましょう。
 
-```diff_vim:~/.vim/init.vim
+```diff_vim_l:~/.vim/init.vim
 
 " dein options {{{
 
