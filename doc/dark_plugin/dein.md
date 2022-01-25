@@ -88,9 +88,11 @@ Vim/Neovimのプラグインマネージャー界隈でも、大手の[vim-plug]
     <dt>Vim or Neovim</dt>
     <dd>Neovim</dd>
     <dt>インストール先</dt>
-    <dd><code>`~/.cache/dein`</code></dd>
+    <dd><code>~/.cache/dein</code></dd>
     <dt>プラグイン管理方式</dt>
     <dd>tomlファイル</dd>
+    <dt>設定ファイルの場所</dt>
+    <dd><code>~/.vim/</code></dd>
 </dl>
 
 また、dein.vimのインストールで使用するスクリプトは以下のようにしています。
@@ -229,7 +231,6 @@ dein.vimで使わなくても大丈夫だけど、使うともっと便利に高
 <!-- textlint-enable -->
 
 そういった人のために、それらの設定を`state_nvim.vim`にまとめてくれる機能がdein.vimにはあります。
-
 設定方法は簡単で、読み込んでほしい設定ファイルのパスを`g:dein#inline_vimrcs`に追加することです。
 `g:dein#inline_vimrcs`はリスト型になっているので、`if has() … end`と`add()`を使えば使用条件によって、読み込む設定ファイルの変更が可能です。
 
