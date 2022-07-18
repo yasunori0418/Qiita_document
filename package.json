@@ -22,6 +22,7 @@
   "homepage": "https://github.com/yasunori-kirin0418/Qiita_document#readme",
   "dependencies": {
     "textlint": "^12.2.1",
+    "textlint-filter-rule-comments": "^1.2.2",
     "textlint-plugin-markdown": "^4.0.6",
     "textlint-rule-preset-ja-technical-writing": "^7.0.0",
     "textlint-rule-preset-jtf-style": "^2.3.13",
