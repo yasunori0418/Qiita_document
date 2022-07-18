@@ -1,0 +1,19 @@
+{
+  "filters": {
+    "comments": true
+  },
+  "rules": {
+    "preset-ja-technical-writing": true,
+    "preset-jtf-style": true,
+    "prh": {
+      "rulePaths": [
+        "./rules/media/WEB+DB_PRESS.yml",
+        "./rules/media/techbooster.yml",
+        "./rules/files/markdown.yml"
+      ]
+    }
+  },
+  "plugins": {
+    "@textlint/markdown": true
+  }
+}
