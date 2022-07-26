@@ -1,6 +1,0 @@
-{
-  "efm-langserver": {
-    "disabled": false,
-    "allowlist": ["markdown"]
-  }
-}
