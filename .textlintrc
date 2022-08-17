@@ -3,8 +3,11 @@
     "comments": true
   },
   "rules": {
-    "preset-ja-technical-writing": true,
-    "preset-jtf-style": true,
+    "preset-ja-technical-writing": {
+      "sentence-length": false,
+      "ja-no-week-phrase": false,
+      "no-exclamation-question-mark": false
+    },
     "prh": {
       "rulePaths": [
         "./rules/media/WEB+DB_PRESS.yml",
