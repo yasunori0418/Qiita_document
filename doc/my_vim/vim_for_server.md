@@ -79,7 +79,7 @@ xnoremap {実際に実行するキーバインド} {もともとvimで使用さ�
 |1 |encoding=utf-8                                                    |Vim内で使用される文字コード。                                               |
 |2 |fileencoding=utf-8                                                |ファイル作成時に使用される文字コード。                                      |
 |3 |fileencodings=utf-8,sjis,iso-2022-jp,euc-jp                       |ファイル読み込み時に使用する文字コード。                                    |
-|4 |fileformats=unix,dos                                              |改行方式                                                                    |
+|4 |fileformats=unix,dos                                              |ファイルの改行方式。LFを優先するが、CRLFだったらCRLF方式で開く。            |
 |5 |autoread                                                          |Vimの外部で変更があった場合に自動で読み直す。                               |
 |6 |number                                                            |行番号の表示。                                                              |
 |7 |relativenumber                                                    |カーソル行から相対行番号を表示する。                                        |
