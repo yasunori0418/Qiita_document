@@ -5,18 +5,19 @@
   "rules": {
     "preset-ja-technical-writing": {
       "sentence-length": false,
-      "ja-no-week-phrase": false,
+      "ja-no-weak-phrase": false,
       "no-exclamation-question-mark": false
     },
+    "preset-jtf-style": true,
     "prh": {
       "rulePaths": [
         "./rules/media/WEB+DB_PRESS.yml",
         "./rules/media/techbooster.yml",
         "./rules/files/markdown.yml"
-      ]
-    }
+      ],
+    },
   },
   "plugins": {
-    "@textlint/markdown": true
-  }
+    "@textlint/markdown": true,
+  },
 }
