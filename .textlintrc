@@ -1,19 +1,23 @@
 {
   "filters": {
-    "comments": true
+    "comments": true,
   },
   "rules": {
     "preset-ja-technical-writing": {
       "sentence-length": false,
       "ja-no-weak-phrase": false,
-      "no-exclamation-question-mark": false
+      "no-exclamation-question-mark": false,
+      "max-kanji-continuous-len": {
+        "max": 8,
+      },
     },
-    "preset-jtf-style": true,
+    "preset-jtf-style": {
+      "4.3.7.山かっこ<>": false,
+    },
     "prh": {
       "rulePaths": [
         "./rules/media/WEB+DB_PRESS.yml",
-        "./rules/media/techbooster.yml",
-        "./rules/files/markdown.yml"
+        "./rules/files/markdown.yml",
       ],
     },
   },
