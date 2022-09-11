@@ -1,19 +1,171 @@
 # Neovimの起動時間を早くする沼に沈みました
 
-さて突然ですが、皆さんのVim/Neovimの起動時間はどのくらいでしょうか？　<span style="font-size: 50%;">*えっ？　VSCode…。　知らない子ですね…。*</span>
+さて突然ですが、皆さんのVim/Neovimの起動時間はどのくらいでしょうか？
 
-Vim/Neovimには起動時のデフォルトプラグインの読み込みや起動までの時間を計測する`--startuptime {log_file}` があります。
+*えっ？　VSCode…。　知らない子ですね…。*
+
+Vim/Neovimには起動時のデフォルトプラグインの読み込みや起動までの時間を計測する`--startuptime {log_file}`があります。
 このオプションを使用すれば、起動までにどのようなプラグインが何msかけて読み込まれているのか丸裸になります。
-今回は、このstartuptimeを計測しつつ起動速度を鬼早くしようという記事です。
+
+<blockquote class="twitter-tweet" data-partner="tweetdeck">
+    <p lang="ja" dir="ltr">
+        011.502  000.002: --- NVIM STARTED ---<br><br>もぅ…、おしまいにしないと……
+    </p>&mdash; yasunori-kirin0418@Vim沼 (@YKirin0418) 
+    <a href="https://twitter.com/YKirin0418/status/1566454256642985986?ref_src=twsrc%5Etfw">September 4, 2022</a>
+</blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+最終的に`011.502  000.002: --- NVIM STARTED ---`で起動できるようになりました。
 
 
 ## 起動速度の調整をしていないときのstartuptime
-* メモ　起動速度調整の境目のコミットID`de31b39` 。
 
 私は[以前にも書いた](https://qiita.com/yasunori-kirin0418/items/4ac5fc07041977a8366f)通り、dein.vimを使用していますので、可能な限りプラグインの起動には遅延を使用していました。
-それでも、起動時間というのは120ms～150msです。
+それでも起動時間は150ms～170msでして、遅延起動を使用しているとは言っても対した速さで起動していないということが分ります。
+ちなみにプラグイン読み込みを無効化して起動時間を計測してみると、12ms～40msで起動していました。
+この数値に近付くように、いろいろと起動時間の調整をしていきます。
+
+
+## tomlファイルの読み込み方をシンプルにする
+
+まずは自身のプラグインの読み込み方法の改善しなくてはいけないところがあります。
+それは、tomlファイルの読み込み方法が複雑化していました。具体的には以下のような感じです。
+
+```vimscript:init.vim
+" plugins toml-file directory.
+let s:toml_dir = g:base_dir ..'toml/'
+let s:toml_files = systemlist('ls ' .. s:toml_dir .. '*.toml')
+
+" Begin settings
+if dein#min#load_state(s:dein_dir)
+
+  " dein inline_vimrcs setting.(今回は省略)
+
+  call dein#begin(s:dein_dir)
+
+  " ================問題のコード==================
+  for toml_file in s:toml_files
+    if toml_file == s:toml_dir .. 'dein.toml'
+      call dein#load_toml(toml_file, {'lazy': 0})
+    else
+      call dein#load_toml(toml_file, {'lazy': 1})
+    endif
+  endfor
+  "==============================================
+
+  " end settings
+  call dein#end()
+  call dein#save_state()
+endif
+```
+
+このコードtomlディレクトリにtomlファイルを置けば、特別定義しなくても読み込んでくれるので以下のような利点があります。
+- プラグインの種類をtomlファイルの名前で分けて、管理しやすくする。
+- lsp関連・denops依存・ddc/ddu関連のプラグインetc…。
+- tomlファイルが増えても勝手に読み込んでくれる。
+
+実際、この部分ができたときは良いコード書けたと思ったのですが、起動速度という面で見れば無駄なコードになってしまいます。
+ちなみにこのコードがあったときの`init.vim`の読み込みに100ms～115msもかかっていました。
+ですので、`dein#load_toml(...)`をベタ書きして、複数のファイルで分けて管理していたプラグインは`lazy.toml`にまとめました。
+
+この変更で`init.vim`の読み込みは18ms～25msまで抑えることができました。
+
 
 ## デフォルトプラグインの無効化
+
+まずは起動時間を早くする方法を調べると、使用するプラグインをLua製の物にして解決していますが、根本的な解決方法ではありません。
+そこで参考にしたのは以下の記事です。
+
+<!-- textlint-disable -->
+- Neovimの設定を見直して起動を30倍速にした
+
+https://zenn.dev/kawarimidoll/articles/8172a4c29a6653
+
+- あんまり見かけない気がする Vim の Tips 11 + 1 選
+
+https://lambdalisue.hatenablog.com/entry/2015/12/25/000046
+<!-- textlint-enable -->
+
+これらの記事ではVim/Neovimインストール時にインストールされるデフォルトプラグインの読み込みを無効にするという方法を行っています。
+この方法はVim/Neovimプラグイン読み込みの際に`plugin/`ディレクトリのファイルから最小限の設定が読み込まれます。
+そのディレクトリに置かれるファイルには、お作法的に以下のようなコードが置かれています。
+
+```vimscript:plugin.vim
+if exists('g:loaded_plugin_name')
+    finish
+endif
+let g:loaded_plugin_name = 1
+```
+
+内容的には`plugin`を常に読み込みに行くので、一度だけ読み込まれるようにしています。
+`g:loaded_plugin_name`が起動時にあれば読み込まれることなくプラグインが終了するというしくみです。
+これはデフォルトプラグインにもありまして、変数名はそれぞれですが、変数を宣言しておけば読み込みに時間がかからなくなります。
+
+最終的に以下の設定を加えました。
+```vimscript:options.vim
+" Disable default plugins {{{
+" Fast Startup Settings!!
+" Disable TOhtml.
+let g:loaded_2html_plugin       = v:true
+
+" Disavle archive file open and browse.
+let g:loaded_gzip               = v:true
+let g:loaded_tar                = v:true
+let g:loaded_tarPlugin          = v:true
+let g:loaded_zip                = v:true
+let g:loaded_zipPlugin          = v:true
+
+" Disable vimball.
+let g:loaded_vimball            = v:true
+let g:loaded_vimballPlugin      = v:true
+
+" Disable netrw plugins.
+let g:loaded_netrw              = v:true
+let g:loaded_netrwPlugin        = v:true
+let g:loaded_netrwSettings      = v:true
+let g:loaded_netrwFileHandlers  = v:true
+
+" Disable `GetLatestVimScript`.
+let g:loaded_getscript          = v:true
+let g:loaded_getscriptPlugin    = v:true
+
+" Disable other plugins
+let g:loaded_man                = v:true
+let g:loaded_matchit            = v:true
+let g:loaded_matchparen         = v:true
+let g:loaded_shada_plugin       = v:true
+let g:loaded_spellfile_plugin   = v:true
+let g:loaded_tutor_mode_plugin  = v:true
+let g:did_install_default_menus = v:true
+let g:did_install_syntax_menu   = v:true
+let g:skip_loading_mswin        = v:true
+let g:did_indent_on             = v:true
+let g:did_load_ftplugin         = v:true
+let g:loaded_rrhelper           = v:true
+
+" }}}
+```
+書き方は人によって違いますが、変数に入れる値に関して私は`v:true`を使用しています。
+`truthy`な値であればなんでも大丈夫でしょう。このあたりは、書く人にお任せするところですね。
+
+### それでもstartuptimeからはファイル名は消えない
+
+ファイル読み込みを抑える設定を紹介した後から、急に力技のような方法になりますが、そもそも読み込むファイルを動かして読み込まなくしてしまう方法があります。
+
+
 ## プラグインの起動タイミング
+
+
+
 ## 最終的な起動速度
+
+
+
 ## まとめ
+
+
+
+## 参考リンク集
+
+- [Neovimの設定を見直して起動を30倍速にした](https://zenn.dev/kawarimidoll/articles/8172a4c29a6653)
+- [あんまり見かけない気がする Vim の Tips 11 + 1 選](https://lambdalisue.hatenablog.com/entry/2015/12/25/000046)
