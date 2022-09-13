@@ -108,7 +108,7 @@ let g:loaded_plugin_name = 1
 " Disable TOhtml.
 let g:loaded_2html_plugin       = v:true
 
-" Disavle archive file open and browse.
+" Disable archive file open and browse.
 let g:loaded_gzip               = v:true
 let g:loaded_tar                = v:true
 let g:loaded_tarPlugin          = v:true
@@ -151,6 +151,81 @@ let g:loaded_rrhelper           = v:true
 ### それでもstartuptimeからはファイル名は消えない
 
 ファイル読み込みを抑える設定を紹介した後から、急に力技のような方法になりますが、そもそも読み込むファイルを動かして読み込まなくしてしまう方法があります。
+先の設定は、あくまでもファイル読み込みが発生しても速攻で読み込みを終了させる方法になります。
+この状態で、`--startuptime {log_file}`を実行しても無効化したファイルの読み込みは発生しています。
+このわずかな読み込みさえ無効化したかったので、参考になる方法はないかTwitterで呟いてみたら、Shougoさんが設定で極限まで削っているという話しを聞きました。
+
+そこで教えてもらったのが、[こちら](https://github.com/Shougo/shougo-s-github/blob/master/install-nvim.sh)のファイルです。
+内容的にはArchLinuxでインストールした時、同時にインストールされるランタイムを消しているようです。
+しかし、私はファイルを消してしまうのは怖かったので、別のディレクトリを作成して、そこに使用して欲くないデフォルトプラグインを退避させて読み込まないようにしてみました。
+以下は、その際に使用できるスクリプトです。
+
+```bash:vim_files_evacation.sh
+#!/bin/bash
+if [ "$EUID" -ne 0 ]; then
+  echo "Please run as root."
+  exit 1
+fi
+
+evacation_dir=/usr/share/vimfiles_evacation
+
+etc_nvim_dir=/etc/xdg/nvim/
+etc_nvim_evacation_dir=$evacation_dir/etc/xdg/
+
+vim_dir=/usr/share/vim/vimfiles/plugin/
+vim_evacation_dir=$evacation_dir/vim/vimfiles/
+
+nvim_dir=/usr/local/share/nvim
+nvim_evacation_dir=$evacation_dir/nvim
+
+nvim_evacation_files=( \
+  runtime/plugin/gzip.vim \
+  runtime/plugin/health.vim \
+  runtime/plugin/man.vim \
+  runtime/plugin/matchit.vim \
+  runtime/plugin/matchparen.vim \
+  runtime/plugin/netrwPlugin.vim \
+  runtime/plugin/shada.vim \
+  runtime/plugin/spellfile.vim \
+  runtime/plugin/tarPlugin.vim \
+  runtime/plugin/tohtml.vim \
+  runtime/plugin/tutor.vim \
+  runtime/plugin/zipPlugin.vim \
+  runtime/menu.vim \
+  runtime/mswin.vim \
+  archlinux.vim)
+
+# Check exists evacation directory.
+# When not exists make evacation directory.
+if [ ! -d $evacation_dir ]; then
+  mkdir -p $nvim_evacation_dir/runtime/plugin
+  mkdir -p $vim_evacation_dir
+  mkdir -p $etc_nvim_evacation_dir
+fi
+
+# XDG/nvim evacation directory
+if [ -d $etc_nvim_dir ]; then
+  mv $etc_nvim_dir $etc_nvim_evacation_dir
+fi
+
+# Vim evacation directory
+if [ -d $vim_dir ]; then
+  mv $vim_dir $vim_evacation_dir
+fi
+
+# Neovim evacation file
+for vim_file in "${nvim_evacation_files[@]}"; do
+  if [ -e ${nvim_dir%/}/${vim_file} ]; then
+    mv $nvim_dir/$vim_file $nvim_evacation_dir/$vim_file
+  fi
+done
+```
+
+上記のスクリプトは、`/usr/local/share/vimfiles_evacation`下に、起動時に読み込まれるファイル郡が置かれていたディレクトリ構造を再現して退避させています。
+仮に設定ファイルがないことで読み込みや起動に支障が出ても退避先のディレクトリを見れば、どこに戻せば良いか分かるということです。
+移動させた後、業務も含めて当環境で作業をしていますが、いまの所支障らしい支障には当たっていません。
+注意として、このスクリプトはArchLinux環境、かつpacmanでインストールしていた場合のディレクトリを想定しています。
+自分でビルドしていた場合やArchLinuxではない場合は想定していませんので注意してください。
 
 
 ## プラグインの起動タイミング
@@ -169,3 +244,4 @@ let g:loaded_rrhelper           = v:true
 
 - [Neovimの設定を見直して起動を30倍速にした](https://zenn.dev/kawarimidoll/articles/8172a4c29a6653)
 - [あんまり見かけない気がする Vim の Tips 11 + 1 選](https://lambdalisue.hatenablog.com/entry/2015/12/25/000046)
+- [Shougo氏が使用するデフォルトプラグイン削除スクリプト](https://github.com/Shougo/shougo-s-github/blob/master/install-nvim.sh)
