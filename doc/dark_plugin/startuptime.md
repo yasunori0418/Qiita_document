@@ -59,7 +59,7 @@ if dein#min#load_state(s:dein_dir)
 endif
 ```
 
-このコードtomlディレクトリにtomlファイルを置けば、特別定義しなくても読み込んでくれるので以下のような利点があります。
+このコード`tomlディレクトリ`にtomlファイルを置けば、特別定義しなくても読み込んでくれるので以下のような利点があります。
 - プラグインの種類をtomlファイルの名前で分けて、管理しやすくする。
 - lsp関連・denops依存・ddc/ddu関連のプラグインetc…。
 - tomlファイルが増えても勝手に読み込んでくれる。
@@ -153,7 +153,7 @@ let g:loaded_rrhelper           = v:true
 ファイル読み込みを抑える設定を紹介した後から、急に力技のような方法になりますが、そもそも読み込むファイルを動かして読み込まなくしてしまう方法があります。
 先の設定は、あくまでもファイル読み込みが発生しても速攻で読み込みを終了させる方法になります。
 この状態で、`--startuptime {log_file}`を実行しても無効化したファイルの読み込みは発生しています。
-このわずかな読み込みさえ無効化したかったので、参考になる方法はないかTwitterで呟いてみたら、Shougoさんが設定で極限まで削っているという話しを聞きました。
+このわずかな読み込みさえ無効化したかったので、参考になる方法はないかTwitterで呟いてみたら、Shougoさんが設定で極限まで削っているという話を聞きました。
 
 そこで教えてもらったのが、[こちら](https://github.com/Shougo/shougo-s-github/blob/master/install-nvim.sh)のファイルです。
 内容的にはArchLinuxでインストールした時、同時にインストールされるランタイムを消しているようです。
@@ -167,7 +167,7 @@ if [ "$EUID" -ne 0 ]; then
   exit 1
 fi
 
-evacation_dir=/usr/share/vimfiles_evacation
+evacation_dir=/usr/local/share/vimfiles_evacation
 
 etc_nvim_dir=/etc/xdg/nvim/
 etc_nvim_evacation_dir=$evacation_dir/etc/xdg/
