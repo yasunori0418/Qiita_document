@@ -155,7 +155,7 @@ let g:loaded_rrhelper           = v:true
 この状態で、`--startuptime {log_file}`を実行しても無効化したファイルの読み込みは発生しています。
 このわずかな読み込みさえ無効化したかったので、参考になる方法はないかTwitterで呟いてみたら、Shougoさんが設定で極限まで削っているという話を聞きました。
 
-そこで教えてもらったのが、[こちら](https://github.com/Shougo/shougo-s-github/blob/master/install-nvim.sh)のファイルです。
+そこで教えてもらったのが、[こちら][link-3]のファイルです。
 内容的にはArchLinuxでインストールした時、同時にインストールされるランタイムを消しているようです。
 しかし、私はファイルを消してしまうのは怖かったので、別のディレクトリを作成して、そこに使用して欲くないデフォルトプラグインを退避させて読み込まないようにしてみました。
 以下は、その際に使用できるスクリプトです。
@@ -231,7 +231,7 @@ done
 自分でビルドしていた場合やArchLinuxではない場合は想定していませんので注意してください。
 
 
-## プラグインの起動タイミング
+## 普段使用するプラグイン
 
 さあ、ここまでの設定すると、トータルの起動時間は20msを切るようになってきます。
 これ以上起動時間を設定で削る方法は、普段から使用しているプラグインを外すという方法になってきます。
@@ -239,7 +239,44 @@ done
 
 ここで思い出してもらいたいのは、`--startuptime`は起動するまでファイルの読み込み時間を計測しているのです。
 この方法はズルと言われてしまうかもしれませんが、様は起動してからプラグインが読み込まれるようにすれば良いのです。
-幸い、dein.vimはそういった調整に長けたプラグインマネージャーです。
+幸い、dein.vimはそういった調整に長けたプラグインマネージャーですので、遅延起動の設定を可能な限り使用して、プラグインの起動タイミングを制御しましょう。
+
+### Neovim限定 ～ impatient.nvim & filetype.nvim
+
+この方法はNeovimでしか使えませんが、プラグイン読み込みを早くするためにプラグインを追加します。
+「起動早くするためなのに、プラグイン追加するとか何言ってんだ」なんて、思わないでください。
+ここで紹介するプラグインを適切に追加することで、そのほかのプラグインの読み込みが早くなるのです。
+
+<!-- textlint-disable -->
+- Neovimのluaモジュールの読み込みを早くして起動時間を改善する`impatient.nvim`
+
+https://github.com/lewis6991/impatient.nvim
+
+- filetype.vimの読み込み時間を改善する`filetype.nvim`
+
+https://github.com/nathom/filetype.nvim
+<!-- textlint-enable -->
+
+詳しい説明は、GitHubで確認してもらうとして、導入することで起動が早くなるというのは伝わったかと思います。
+また、これらのプラグインは[こちら][link-1]でも紹介されていますね。
+
+#### dein.vimでこれらのプラグインを導入するなら、どう書くべきか
+
+この答えは[以前書いた記事][link-4]にあります。そう、no_lazyなプラグインのディレクトリをマージしてくれる機能です。
+`{'lazy': 0}`に設定したtomlファイルの中でこれらのプラグインを管理すれば、問題なく機能してくれます。
+
+```toml:dein.toml
+[[plugins]]
+repo = 'nathom/filetype.nvim'
+
+[[plugins]]
+repo = 'lewis6991/impatient.nvim'
+hook_add = '''
+lua require('impatient')
+'''
+```
+
+filetype.nvimに関してはGitHubページを見るといろいろ設定できるところがありますが、私は特別設定せずとも効果を体感しています。
 
 
 ## 最終的な起動速度
@@ -252,6 +289,13 @@ done
 
 ## 参考リンク集
 
-- [Neovimの設定を見直して起動を30倍速にした](https://zenn.dev/kawarimidoll/articles/8172a4c29a6653)
-- [あんまり見かけない気がする Vim の Tips 11 + 1 選](https://lambdalisue.hatenablog.com/entry/2015/12/25/000046)
-- [Shougo氏が使用するデフォルトプラグイン削除スクリプト](https://github.com/Shougo/shougo-s-github/blob/master/install-nvim.sh)
+- [Neovimの設定を見直して起動を30倍速にした][link-1]
+- [あんまり見かけない気がする Vim の Tips 11 + 1 選][link-2]
+- [Shougoさんが使用するデフォルトプラグイン削除スクリプト][link-3]
+- [手前味噌な記事][link-4]
+
+<!-- リンク集(Hidden) -->
+[link-1]: https://zenn.dev/kawarimidoll/articles/8172a4c29a6653
+[link-2]: https://lambdalisue.hatenablog.com/entry/2015/12/25/000046
+[link-3]: https://github.com/Shougo/shougo-s-github/blob/master/install-nvim.sh
+[link-4]: https://qiita.com/yasunori-kirin0418/items/4ac5fc07041977a8366f#no_lazy%E3%81%AE%E3%83%97%E3%83%A9%E3%82%B0%E3%82%A4%E3%83%B3%E3%82%82%E9%AB%98%E9%80%9F%E5%8C%96%E3%81%99%E3%82%8B%E3%83%9E%E3%83%BC%E3%82%B8%E6%A9%9F%E8%83%BD
