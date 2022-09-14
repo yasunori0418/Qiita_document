@@ -175,7 +175,7 @@ etc_nvim_evacation_dir=$evacation_dir/etc/xdg/
 vim_dir=/usr/share/vim/vimfiles/plugin/
 vim_evacation_dir=$evacation_dir/vim/vimfiles/
 
-nvim_dir=/usr/local/share/nvim
+nvim_dir=/usr/share/nvim
 nvim_evacation_dir=$evacation_dir/nvim
 
 nvim_evacation_files=( \
@@ -193,6 +193,9 @@ nvim_evacation_files=( \
   runtime/plugin/zipPlugin.vim \
   runtime/menu.vim \
   runtime/mswin.vim \
+  runtime/ftoff.vim \
+  runtime/filetype.vim \
+  runtime/filetype.lua \
   archlinux.vim)
 
 # Check exists evacation directory.
@@ -230,6 +233,13 @@ done
 
 ## プラグインの起動タイミング
 
+さあ、ここまでの設定すると、トータルの起動時間は20msを切るようになってきます。
+これ以上起動時間を設定で削る方法は、普段から使用しているプラグインを外すという方法になってきます。
+しかし、それではオシャレなカラースキームなどが使えなくなってしまいます。
+
+ここで思い出してもらいたいのは、`--startuptime`は起動するまでファイルの読み込み時間を計測しているのです。
+この方法はズルと言われてしまうかもしれませんが、様は起動してからプラグインが読み込まれるようにすれば良いのです。
+幸い、dein.vimはそういった調整に長けたプラグインマネージャーです。
 
 
 ## 最終的な起動速度
