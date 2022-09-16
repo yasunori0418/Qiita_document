@@ -322,6 +322,8 @@ dein.vimでは`{'lazy': 1}`を指定したtomlファイル内でプラグイン�
 
 起動時間短縮に利用できる場面としては、次のようになります。
 
+---
+
 `lightline.vim`の設定に`vim-gitbranch`と`nightfox.nvim`を使用している。 → `depends`に配列で追加。`lightline.vim`の起動タイミングは`on_event`で解説したイベント郡を指定。
 `nightfox.nvim`は`nvim-treesitter`が必要。 → `depends`に`nvim-treesitter`を指定。起動タイミングの`on_*`系統は設定しない。
 
