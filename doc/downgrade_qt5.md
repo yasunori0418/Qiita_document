@@ -21,7 +21,7 @@ Cannot mix incompatible Qt library (5.15.5) with this library (5.15.6)
 
 ```zsh:terminal
 paru -S downgrade     # downgradeをAURヘルパーでインストールします。
-paru -Qs qt5 | rg '5.15.6' | sed -r "s/local\///g" | awk -F'[ ]' '{print $1}' | tr '\n' ' ' | sudo downgrade -
+paru -Qs qt5 | rg '5.15.6' | sed -r "s/local\///g" | awk -F'[ ]' '{print $1}' | tr '\n' ' ' > pkglist.txt && sudo downgrade `cat pkglist.txt` && rm pkglist.txt
 ```
 
 今回のコマンドで、注意してほしいこと。
