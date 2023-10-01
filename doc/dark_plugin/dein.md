@@ -144,6 +144,7 @@ endif
 filetype plugin indent on
 syntax enable
 ```
+
 </div></details>
 
 <!-- }}} -->
@@ -394,7 +395,7 @@ _[ここ][6]でShougoさんのプラグインを個別紹介したいとか注�
 [^2]: ファイル名はNeovim使用時です。Vim使用時は、`state_vim.vim`になります。
 
 <!-- Links -->
-[1]: https://github.com/Shougo/dein.vim
+<!-- [1]: https://github.com/Shougo/dein.vim -->
 [2]: https://github.com/wbthomason/packer.nvim
 [3]: https://github.com/junegunn/vim-plug
 [4]: https://thinca.hatenablog.com/entry/dein-vim-with-graphql-api
