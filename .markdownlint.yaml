@@ -1,4 +1,6 @@
+---
 # Example markdownlint configuration with all properties set to their default value
+# https://github.com/DavidAnson/markdownlint/blob/main/schema/.markdownlint.yaml
 
 # Default state for all rules
 default: true
@@ -163,10 +165,18 @@ MD032: true
 # MD033/no-inline-html - Inline HTML
 MD033:
   # Allowed elements
-  allowed_elements: []
+  allowed_elements:
+    - br
+    - div
+    - dl
+    - dt
+    - dd
+    - code
+    - details
+    - summary
 
 # MD034/no-bare-urls - Bare URL used
-MD034: true
+MD034: false
 
 # MD035/hr-style - Horizontal rule style
 MD035:
@@ -261,3 +271,4 @@ MD053:
   # Ignored definitions
   ignored_definitions:
     - "//"
+
